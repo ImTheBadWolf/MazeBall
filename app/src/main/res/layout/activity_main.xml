@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="casual"
-        android:text="Maze Ball"
+        android:text="Maze Runner"
         android:textColor="#302B2B"
         android:textSize="90sp"
         android:textStyle="bold"
@@ -50,5 +50,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Maze Ball" />
+        tools:text="Maze Runner" />
 </androidx.constraintlayout.widget.ConstraintLayout>
