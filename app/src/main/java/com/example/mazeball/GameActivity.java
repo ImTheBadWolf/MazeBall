@@ -2,20 +2,16 @@ package com.example.mazeball;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 public class GameActivity extends AppCompatActivity {
 
     SensorManager sensorManager;
-    Sensor gyroscopeSensor;
+    Sensor accSensor;
 
     game_view gameView;
 
@@ -26,30 +22,28 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        gameView = (game_view)findViewById(R.id.gameView);
-        gameView.zakric();
+        gameView = findViewById(R.id.gameView);
     }
 
     public void onResume() {
         super.onResume();
-        sensorManager.registerListener(gyroscopeEListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(accEListener, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void onStop() {
         super.onStop();
-        sensorManager.unregisterListener(gyroscopeEListener);
+        sensorManager.unregisterListener(accEListener);
     }
-    public SensorEventListener gyroscopeEListener = new SensorEventListener() {
+    public SensorEventListener accEListener = new SensorEventListener() {
         public void onAccuracyChanged(Sensor sensor, int acc) {
         }
 
         public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0]*100;
-            float y = event.values[1]*100;
-            Log.d("gyroX", Float.toString(x));
-            Log.d("gyroY", Float.toString(y));
+            float x = event.values[0]*10;
+            float y = event.values[1]*10;
+            gameView.setRotationValues(x,y);
         }
     };
 
