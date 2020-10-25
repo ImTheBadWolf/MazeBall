@@ -8,6 +8,16 @@
     android:keepScreenOn="false"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/menubg_foreground"
+        tools:layout_editor_absoluteX="65dp" />
+
     <ImageButton
         android:id="@+id/playButton"
         android:layout_width="139dp"
@@ -44,7 +54,7 @@
         android:layout_marginTop="40dp"
         android:fontFamily="casual"
         android:text="Maze Runner"
-        android:textColor="#302B2B"
+        android:textColor="#FAF8F8"
         android:textSize="90sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,4 +62,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Maze Runner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
