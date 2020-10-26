@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
-        sensorManager.registerListener(accEListener, accSensor, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(accEListener, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void onStop() {
