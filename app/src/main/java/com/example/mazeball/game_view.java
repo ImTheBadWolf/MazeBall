@@ -1,5 +1,6 @@
 package com.example.mazeball;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +11,11 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 enum moveDir{
     UP,
@@ -26,25 +31,19 @@ public class game_view extends View{
     float accXOffset = -999999999;
     float accYOffset = -999999999;
     boolean end = false;
+    boolean paused = false;
     int[][] mazeMap = {
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,2,3,2,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,2,2,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+            {0},
     };
 
     int gameWidth = mazeMap[0].length;
     int gameHeight = mazeMap.length;
 
     int[] playerPos = new int[2];
-    int[] goalPos = new int[2];
+    int[] goalPos = new int[]{-1,-1};
     int playerSizeMultiplier = 25;
+
+    private EventListener listener;
 
     public void setRotationValues(float x, float y){
         //Log.d("accX", Float.toString(x));
@@ -55,7 +54,7 @@ public class game_view extends View{
             accYOffset = y;
         }
         else{
-            if(!end)
+            if(!end && !paused)
                 movePlayer(x-accXOffset,y-accYOffset);
         }
 
@@ -94,12 +93,10 @@ public class game_view extends View{
         super(context);
         init(context);
     }
-
     public game_view(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
-
     public game_view(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
@@ -131,6 +128,22 @@ public class game_view extends View{
         }
     }
 
+    public void restart(){
+        //TODO remove restart fnction, replace by accelerometer recalibration
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public void setMazeMap(int[][] mazeMap) {
+        this.mazeMap = mazeMap;
+        gameWidth = mazeMap[0].length;
+        gameHeight = mazeMap.length;
+        init(getContext());
+        end = false;
+        invalidate();
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -148,11 +161,19 @@ public class game_view extends View{
         canvas.drawBitmap(player[0], null, new Rect(playerPos[0] * width-playerSizeMultiplier, playerPos[1] * height-playerSizeMultiplier, (playerPos[0] + 1) * width+playerSizeMultiplier, (playerPos[1] + 1) * height+playerSizeMultiplier), null);
 
         if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
-            Toast.makeText(getContext(), "Si vyhral", Toast.LENGTH_SHORT).show();
-            playerPos[0] =21;//TODO remove this shitcode
-            playerPos[1] = 11;
+            playerPos[0] =-1;//TODO remove this shitcode
+            playerPos[1] = -1;//E: its good for now
             end = true;
+            listener.levelFinished();
         }
     }
+
+    public void attachActivity(Activity activity)
+    {
+        if(activity instanceof EventListener) {
+            listener = (EventListener)activity;
+        }
+    }
+
 }
 

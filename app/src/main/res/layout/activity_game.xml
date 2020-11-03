@@ -10,6 +10,151 @@
     <com.example.mazeball.game_view
         android:id="@+id/gameView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.example.mazeball.game_view>
+        android:layout_height="match_parent" />
+
+
+    <com.example.mazeball.pause_view
+        android:id="@+id/pauseView"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:background="@mipmap/pausebg_foreground"
+        app:layout_constraintBottom_toTopOf="@+id/gameView"
+        app:layout_constraintEnd_toStartOf="@+id/gameView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gameView"
+        app:layout_constraintTop_toBottomOf="@+id/gameView"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@+id/pauseView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pauseView"
+            app:srcCompat="@mipmap/pausetext_foreground" />
+
+        <TableLayout
+            android:layout_width="190dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/pauseView"
+            app:layout_constraintEnd_toStartOf="@+id/pauseView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pauseView"
+            app:layout_constraintTop_toBottomOf="@+id/pauseView">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerInside"
+                    android:layout_marginRight="50dp"
+                    app:srcCompat="@mipmap/playbutton_foreground"
+                    android:onClick="resumeGame"/>
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/restartbtn_foreground"
+                    android:onClick="restartGame"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="50dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/muteoff_foreground"
+                    android:onClick="muteGame"/>
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/closebutton_foreground"
+                    android:onClick="quitGame"/>
+            </TableRow>
+        </TableLayout>
+
+
+    </com.example.mazeball.pause_view>
+
+    <com.example.mazeball.Win_view
+        android:id="@+id/winview"
+        android:layout_width="230dp"
+        android:layout_height="200dp"
+        android:background="@mipmap/pausebg_foreground"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/gameView"
+        app:layout_constraintEnd_toStartOf="@+id/gameView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gameView"
+        app:layout_constraintTop_toBottomOf="@+id/gameView">
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@+id/winview"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/winview"
+            app:srcCompat="@mipmap/wintext_foreground" />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="280dp"
+            android:layout_marginBottom="1dp"
+            android:background="#00FFFFFF"
+            android:onClick="nextLevel"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@+id/imageView13"
+            app:layout_constraintEnd_toStartOf="@+id/winview"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/winview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/nextlevel_foreground" />
+
+    </com.example.mazeball.Win_view>
+
+
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="#00FFFFFF"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@mipmap/pausebn_foreground"
+        android:onClick="pauseGame"/>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
