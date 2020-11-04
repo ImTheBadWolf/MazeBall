@@ -33,7 +33,7 @@ public class game_view extends View{
     boolean end = false;
     boolean paused = false;
     int[][] mazeMap = {
-            {0},
+            {0}
     };
 
     int gameWidth = mazeMap[0].length;
@@ -41,15 +41,12 @@ public class game_view extends View{
 
     int[] playerPos = new int[2];
     int[] goalPos = new int[]{-1,-1};
-    int playerSizeMultiplier = 25;
 
     private EventListener listener;
 
     public void setRotationValues(float x, float y){
-        //Log.d("accX", Float.toString(x));
-        //Log.d("accY", Float.toString(y));
         if(accXOffset == -999999999 && accYOffset == -999999999){
-            //setOffset for accelerometer, TODO this shitcode needs to be redone
+            //setOffset for accelerometer
             accXOffset = x;
             accYOffset = y;
         }
@@ -57,7 +54,6 @@ public class game_view extends View{
             if(!end && !paused)
                 movePlayer(x-accXOffset,y-accYOffset);
         }
-
     }
 
     public void movePlayer(float x, float y){
@@ -109,7 +105,7 @@ public class game_view extends View{
         bmp[2] = BitmapFactory.decodeResource(getResources(), R.mipmap.tile11_foreground);
 
         player = new Bitmap[1];
-        player[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.player1_foreground);
+        player[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.player8_foreground);
 
         //find spawn and goal
         for(int y = 0; y < mazeMap.length; y++){
@@ -147,18 +143,18 @@ public class game_view extends View{
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        width = w/gameWidth;
-        height = h/gameHeight;
+        width = w;
+        height = h;
         super.onSizeChanged(w, h, oldw, oldh);
     }
     @Override
     protected void onDraw(Canvas canvas) {
         for (int i = 0; i < gameHeight; i++) {
             for (int j = 0; j < gameWidth; j++) {
-                canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(j * width, i * height, (j + 1) * width, (i + 1) * height), null);
+                canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(j * width/gameWidth, i * height/gameHeight, (j + 1) * width/gameWidth, (i + 1) * height/gameHeight), null);
             }
         }
-        canvas.drawBitmap(player[0], null, new Rect(playerPos[0] * width-playerSizeMultiplier, playerPos[1] * height-playerSizeMultiplier, (playerPos[0] + 1) * width+playerSizeMultiplier, (playerPos[1] + 1) * height+playerSizeMultiplier), null);
+        canvas.drawBitmap(player[0], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
 
         if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
             playerPos[0] =-1;//TODO remove this shitcode

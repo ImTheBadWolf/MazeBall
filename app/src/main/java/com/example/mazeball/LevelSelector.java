@@ -5,6 +5,7 @@ import androidx.core.app.NavUtils;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class LevelSelector extends AppCompatActivity {
@@ -18,7 +19,9 @@ public class LevelSelector extends AppCompatActivity {
         NavUtils.navigateUpFromSameTask(this);
     }
     public void openLevel(View view){
+
         Intent myIntent = new Intent(this, GameActivity.class);
+        myIntent.putExtra("level", view.getTag().toString());
         startActivity(myIntent);
     }
 
