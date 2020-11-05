@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -45,7 +45,8 @@
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@mipmap/settingsbutton_foreground" />
+        app:srcCompat="@mipmap/settingsbutton_foreground"
+        android:onClick="openSettings"/>
 
     <TextView
         android:id="@+id/textView"
@@ -54,13 +55,163 @@
         android:layout_marginTop="40dp"
         android:fontFamily="casual"
         android:text="Maze Runner"
-        android:textColor="#FAF8F8"
+        android:textColor="#519221"
         android:textSize="90sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Maze Runner" />
+        tools:text=" Maze Runner " />
+
+    <com.example.mazeball.Settings_view
+        android:id="@+id/settingsView"
+        android:layout_width="650dp"
+        android:layout_height="350dp"
+        android:background="@mipmap/pausebg_foreground"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:visibility="invisible">
+
+        <ImageButton
+            android:id="@+id/imageButtonMute"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:background="#00FFFFFF"
+            android:onClick="mute"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/muteoff_foreground" />
+        <ImageButton
+            android:id="@+id/imageButtonSettings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            android:background="#00FFFFFF"
+            android:onClick="closeSettings"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/closebutton_foreground" />
+
+        <TableLayout
+            android:layout_width="550dp"
+            android:layout_height="230dp"
+            android:layout_marginTop="70dp"
+            app:layout_constraintEnd_toStartOf="@+id/settingsView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/settingsView"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="1"
+                    app:srcCompat="@mipmap/player1_foreground" />
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="2"
+                    app:srcCompat="@mipmap/player2_foreground" />
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="3"
+                    app:srcCompat="@mipmap/player3_foreground" />
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="4"
+                    app:srcCompat="@mipmap/player4_foreground" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="60dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="5"
+                    app:srcCompat="@mipmap/player5_foreground" />
+
+                <ImageButton
+                    android:id="@+id/imageButton6"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="60dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="6"
+                    app:srcCompat="@mipmap/player6_foreground" />
+
+                <ImageButton
+                    android:id="@+id/imageButton7"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="60dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="7"
+                    app:srcCompat="@mipmap/player7_foreground" />
+
+                <ImageButton
+                    android:id="@+id/imageButton8"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="setPlayer"
+                    android:scaleType="centerInside"
+                    android:tag="8"
+                    app:srcCompat="@mipmap/player8_foreground" />
+            </TableRow>
+
+        </TableLayout>
+
+
+    </com.example.mazeball.Settings_view>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

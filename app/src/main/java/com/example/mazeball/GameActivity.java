@@ -28,6 +28,7 @@ public class GameActivity extends AppCompatActivity implements EventListener {
     game_view gameView;
     pause_view pauseView;
     Win_view winView;
+    int playerAvatar;
     ImageButton muteButton;
     int mapIndex = 0;
     float accX;
@@ -62,7 +63,8 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         setContentView(R.layout.activity_game);
 
         Intent i = getIntent();
-        mapIndex  = Integer.parseInt(i.getStringExtra("level"))-1;
+        mapIndex  = i.getIntExtra("level", 1) - 1;
+        playerAvatar  = i.getIntExtra("avatar", 1)-1;
         loadLevels();
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -72,6 +74,7 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         winView = findViewById(R.id.winview);
         muteButton = findViewById(R.id.imageButton4);
 
+        gameView.setAvatar(playerAvatar);
         gameView.setMazeMap(cloneArray(mapIndex));
         Toast.makeText(this, "Level " + (mapIndex+1), Toast.LENGTH_SHORT).show();
         gameView.attachActivity(this);

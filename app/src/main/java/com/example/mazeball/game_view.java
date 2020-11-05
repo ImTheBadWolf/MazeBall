@@ -28,6 +28,7 @@ public class game_view extends View{
 
     Bitmap[] bmp, player;
     int width, height;
+    int avatarId = 1;
     float accXOffset = -999999999;
     float accYOffset = -999999999;
     boolean end = false;
@@ -104,8 +105,15 @@ public class game_view extends View{
         bmp[1] = BitmapFactory.decodeResource(getResources(), R.mipmap.tile10_foreground);
         bmp[2] = BitmapFactory.decodeResource(getResources(), R.mipmap.tile11_foreground);
 
-        player = new Bitmap[1];
-        player[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.player6_foreground);
+        player = new Bitmap[8];
+        player[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.player1_foreground);
+        player[1] = BitmapFactory.decodeResource(getResources(), R.mipmap.player2_foreground);
+        player[2] = BitmapFactory.decodeResource(getResources(), R.mipmap.player3_foreground);
+        player[3] = BitmapFactory.decodeResource(getResources(), R.mipmap.player4_foreground);
+        player[4] = BitmapFactory.decodeResource(getResources(), R.mipmap.player5_foreground);
+        player[5] = BitmapFactory.decodeResource(getResources(), R.mipmap.player6_foreground);
+        player[6] = BitmapFactory.decodeResource(getResources(), R.mipmap.player7_foreground);
+        player[7] = BitmapFactory.decodeResource(getResources(), R.mipmap.player8_foreground);
 
         //find spawn and goal
         for(int y = 0; y < mazeMap.length; y++){
@@ -141,6 +149,9 @@ public class game_view extends View{
         accYOffset = y;
         Toast.makeText(getContext(), "Accelerometer calibrated", Toast.LENGTH_SHORT).show();
     }
+    public void setAvatar(int avatarId){
+        this.avatarId = avatarId;
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -155,7 +166,7 @@ public class game_view extends View{
                 canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(j * width/gameWidth, i * height/gameHeight, (j + 1) * width/gameWidth, (i + 1) * height/gameHeight), null);
             }
         }
-        canvas.drawBitmap(player[0], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
+        canvas.drawBitmap(player[avatarId], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
 
         if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
             playerPos[0] =-1;//TODO remove this shitcode

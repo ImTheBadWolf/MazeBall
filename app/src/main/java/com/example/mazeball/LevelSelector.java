@@ -10,10 +10,13 @@ import android.view.View;
 
 public class LevelSelector extends AppCompatActivity {
 
+    int playerAvatar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_selector);
+        Intent i = getIntent();
+        playerAvatar = i.getIntExtra("avatar", 1);//TODO instead of getting playe avatar from parent activity, load it from shared preferences
     }
     public void close(View view){
         NavUtils.navigateUpFromSameTask(this);
@@ -21,7 +24,8 @@ public class LevelSelector extends AppCompatActivity {
     public void openLevel(View view){
 
         Intent myIntent = new Intent(this, GameActivity.class);
-        myIntent.putExtra("level", view.getTag().toString());
+        myIntent.putExtra("level", Integer.parseInt(view.getTag().toString()));
+        myIntent.putExtra("avatar", playerAvatar);
         startActivity(myIntent);
     }
 

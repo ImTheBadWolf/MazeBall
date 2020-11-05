@@ -7,6 +7,16 @@
     tools:context=".LevelSelector">
 
     <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/menubg_foreground"
+        tools:layout_editor_absoluteX="65dp" />
+
+    <ImageView
         android:tag="2"
         android:onClick="openLevel"
         android:id="@+id/imageView3"
@@ -21,15 +31,15 @@
         app:srcCompat="@mipmap/twobutton_foreground" />
 
     <ImageView
-        android:tag="1"
-        android:onClick="openLevel"
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="40dp"
         android:background="#00FFFFFF"
+        android:onClick="openLevel"
         android:scaleType="center"
+        android:tag="1"
         app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/onebutton_foreground" />
@@ -77,19 +87,18 @@
         app:srcCompat="@mipmap/sevenbutton_foreground" />
 
     <ImageView
-        android:tag="8"
-        android:onClick="openLevel"
         android:id="@+id/imageView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="135dp"
         android:background="#00FFFFFF"
+        android:onClick="openLevel"
         android:scaleType="center"
+        android:tag="8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@mipmap/eightbutton_foreground"
-        />
+        app:srcCompat="@mipmap/eightbutton_foreground" />
 
     <ImageButton
         android:id="@+id/settingsButton2"
@@ -105,15 +114,15 @@
         android:onClick="close"/>
 
     <ImageView
-        android:tag="4"
-        android:onClick="openLevel"
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="135dp"
         android:background="#00FFFFFF"
+        android:onClick="openLevel"
         android:scaleType="center"
+        android:tag="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/fourbutton_foreground" />
