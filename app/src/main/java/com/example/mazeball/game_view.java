@@ -32,7 +32,7 @@ public class game_view extends View{
     float accYOffset = -999999999;
     boolean end = false;
     boolean paused = false;
-    int[][] mazeMap = {
+    Integer[][] mazeMap = {
             {0}
     };
 
@@ -132,7 +132,7 @@ public class game_view extends View{
         this.paused = paused;
     }
 
-    public void setMazeMap(int[][] mazeMap) {
+    public void setMazeMap(Integer[][] mazeMap) {
         this.mazeMap = mazeMap;
         gameWidth = mazeMap[0].length;
         gameHeight = mazeMap.length;
