@@ -105,7 +105,7 @@ public class game_view extends View{
         bmp[2] = BitmapFactory.decodeResource(getResources(), R.mipmap.tile11_foreground);
 
         player = new Bitmap[1];
-        player[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.player8_foreground);
+        player[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.player6_foreground);
 
         //find spawn and goal
         for(int y = 0; y < mazeMap.length; y++){
@@ -124,10 +124,6 @@ public class game_view extends View{
         }
     }
 
-    public void restart(){
-        //TODO remove restart fnction, replace by accelerometer recalibration
-    }
-
     public void setPaused(boolean paused) {
         this.paused = paused;
     }
@@ -139,6 +135,11 @@ public class game_view extends View{
         init(getContext());
         end = false;
         invalidate();
+    }
+    public void calibrateAccelerometer(float x, float y){
+        accXOffset = x;
+        accYOffset = y;
+        Toast.makeText(getContext(), "Accelerometer calibrated", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -163,9 +164,7 @@ public class game_view extends View{
             listener.levelFinished();
         }
     }
-
-    public void attachActivity(Activity activity)
-    {
+    public void attachActivity(Activity activity) {
         if(activity instanceof EventListener) {
             listener = (EventListener)activity;
         }

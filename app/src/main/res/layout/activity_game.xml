@@ -67,8 +67,8 @@
                     android:layout_marginBottom="10dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerInside"
-                    app:srcCompat="@mipmap/restartbtn_foreground"
-                    android:onClick="restartGame"/>
+                    app:srcCompat="@mipmap/calibratebtn_foreground"
+                    android:onClick="calibrateAccelerometer"/>
             </TableRow>
 
             <TableRow

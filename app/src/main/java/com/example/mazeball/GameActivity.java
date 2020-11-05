@@ -30,6 +30,8 @@ public class GameActivity extends AppCompatActivity implements EventListener {
     Win_view winView;
     ImageButton muteButton;
     int mapIndex = 0;
+    float accX;
+    float accY;
 
     ArrayList<ArrayList<String>> mazeMapsS = new ArrayList();
     ArrayList<ArrayList<Integer[]>> mazeMapsI = new ArrayList();
@@ -89,9 +91,9 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         }
 
         public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0]*10;
-            float y = event.values[1]*10;
-            gameView.setRotationValues(x,y);
+            accX = event.values[0]*10;
+            accY = event.values[1]*10;
+            gameView.setRotationValues(accX,accY);
         }
     };
 
@@ -106,11 +108,14 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         findViewById(R.id.imageButton).setVisibility(View.VISIBLE);
         gameView.setPaused(false);
     }
+    public void calibrateAccelerometer(View view){
+        gameView.calibrateAccelerometer(accX, accY);
+        pauseView.setVisibility(View.INVISIBLE);
+        findViewById(R.id.imageButton).setVisibility(View.VISIBLE);
+        gameView.setPaused(false);
+    }
     public void quitGame(View view){
         NavUtils.navigateUpFromSameTask(this);
-    }
-    public void restartGame(View view){
-        gameView.restart();
     }
     public void muteGame(View view){
         muteButton.setImageResource( muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground );
