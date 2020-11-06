@@ -169,8 +169,8 @@ public class game_view extends View{
         canvas.drawBitmap(player[avatarId-1], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
 
         if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
-            playerPos[0] =-1;//TODO remove this shitcode
-            playerPos[1] = -1;//E: its good for now
+            playerPos[0] =-1;
+            playerPos[1] = -1;
             end = true;
             listener.levelFinished();
         }
