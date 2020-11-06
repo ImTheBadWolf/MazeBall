@@ -217,7 +217,6 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         }
         catch (IOException e){
             e.printStackTrace();
-            //TODO create empty level
         }
     }
 
