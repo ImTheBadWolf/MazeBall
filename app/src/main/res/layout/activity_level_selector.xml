@@ -19,19 +19,19 @@
     <ImageView
         android:tag="2"
         android:onClick="openLevel"
-        android:id="@+id/imageView3"
+        android:id="@+id/levelBtn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="40dp"
         android:background="#00FFFFFF"
         android:scaleType="center"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/levelBtn3"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/twobutton_foreground" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/levelBtn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -40,54 +40,54 @@
         android:onClick="openLevel"
         android:scaleType="center"
         android:tag="1"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/levelBtn2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/onebutton_foreground" />
 
     <ImageView
         android:tag="5"
         android:onClick="openLevel"
-        android:id="@+id/imageView5"
+        android:id="@+id/levelBtn5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="40dp"
         android:background="#00FFFFFF"
         android:scaleType="center"
-        app:layout_constraintEnd_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintEnd_toStartOf="@+id/levelBtn6"
+        app:layout_constraintTop_toBottomOf="@+id/levelBtn1"
         app:srcCompat="@mipmap/fivebutton_foreground" />
 
     <ImageView
         android:tag="6"
         android:onClick="openLevel"
-        android:id="@+id/imageView6"
+        android:id="@+id/levelBtn6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="40dp"
         android:background="#00FFFFFF"
         android:scaleType="center"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/levelBtn7"
+        app:layout_constraintTop_toBottomOf="@+id/levelBtn2"
         app:srcCompat="@mipmap/sixbutton_foreground" />
 
     <ImageView
         android:tag="7"
         android:onClick="openLevel"
-        android:id="@+id/imageView7"
+        android:id="@+id/levelBtn7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="40dp"
         android:background="#00FFFFFF"
         android:scaleType="center"
-        app:layout_constraintEnd_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/levelBtn8"
+        app:layout_constraintTop_toBottomOf="@+id/levelBtn3"
         app:srcCompat="@mipmap/sevenbutton_foreground" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/levelBtn8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -97,7 +97,7 @@
         android:scaleType="center"
         android:tag="8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/levelBtn4"
         app:srcCompat="@mipmap/eightbutton_foreground" />
 
     <ImageButton
@@ -114,7 +114,7 @@
         android:onClick="close"/>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/levelBtn4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -130,14 +130,14 @@
     <ImageView
         android:tag="3"
         android:onClick="openLevel"
-        android:id="@+id/imageView2"
+        android:id="@+id/levelBtn3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="40dp"
         android:background="#00FFFFFF"
         android:scaleType="center"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/levelBtn4"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/threebutton_foreground" />
 </androidx.constraintlayout.widget.ConstraintLayout>

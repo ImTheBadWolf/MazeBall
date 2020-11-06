@@ -3,30 +3,66 @@ package com.example.mazeball;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class LevelSelector extends AppCompatActivity {
 
-    int playerAvatar;
+    boolean muted;
+    int maxLevel;
+    SoundPlayer soundPlayer;
+    SharedPreferences sharedpreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_selector);
-        Intent i = getIntent();
-        playerAvatar = i.getIntExtra("avatar", 1);//TODO instead of getting playe avatar from parent activity, load it from shared preferences
+        sharedpreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        muted = sharedpreferences.getBoolean("muted", false);
+        maxLevel = sharedpreferences.getInt("maxLevel", 1);
+        soundPlayer = new SoundPlayer(this, muted);
+        setGrayAll();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        muted = sharedpreferences.getBoolean("muted", false);
+        soundPlayer.setMuted(muted);
     }
     public void close(View view){
+        soundPlayer.playClickSound();
         NavUtils.navigateUpFromSameTask(this);
     }
     public void openLevel(View view){
+        int level = Integer.parseInt(view.getTag().toString());
+        if (level <= maxLevel) {
+            soundPlayer.playClickSound();
+            Intent myIntent = new Intent(this, GameActivity.class);
+            myIntent.putExtra("level", level);
+            startActivity(myIntent);
+        }
+        else
+            soundPlayer.playDClickSound();
 
-        Intent myIntent = new Intent(this, GameActivity.class);
-        myIntent.putExtra("level", Integer.parseInt(view.getTag().toString()));
-        myIntent.putExtra("avatar", playerAvatar);
-        startActivity(myIntent);
+    }
+
+    private void setGrayAll(){
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        for(int i=maxLevel+1; i<9; i++){
+            int resID = getResources().getIdentifier("levelBtn"+i, "id", getPackageName());
+            ImageView imgv = findViewById(resID);
+            imgv.setColorFilter(filter);
+        }
     }
 
     @Override

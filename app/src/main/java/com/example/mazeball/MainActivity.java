@@ -2,42 +2,60 @@ package com.example.mazeball;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     Settings_view settingsView;
-
-    int playerAvatar = 5;
-    boolean muted = false;
+    SoundPlayer soundPlayer;
+    SharedPreferences sharedpreferences;
+    ImageButton muteBtn;
+    int playerAvatar;
+    boolean muted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedpreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        playerAvatar = sharedpreferences.getInt("avatarId", 1);
+        muted = sharedpreferences.getBoolean("muted", false);
         settingsView = findViewById(R.id.settingsView);
-        setGray();
+        muteBtn = findViewById(R.id.imageButtonMute);
+        muteBtn.setImageResource(muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground);
+        setGrayAll();
         setPlayer(playerAvatar);
+        soundPlayer = new SoundPlayer(this, muted);
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        muted = sharedpreferences.getBoolean("muted", false);
+        soundPlayer.setMuted(muted);
+        muteBtn.setImageResource(muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground);
     }
 
     public void launchGame(View view){
+        soundPlayer.playClickSound();
         Intent myIntent = new Intent(this, LevelSelector.class);
-        myIntent.putExtra("avatar", playerAvatar);
         startActivity(myIntent);
     }
     public void openSettings(View view){
+        soundPlayer.playClickSound();
         settingsView.setVisibility(View.VISIBLE);
         findViewById(R.id.settingsButton).setVisibility(View.INVISIBLE);
         findViewById(R.id.playButton).setVisibility(View.INVISIBLE);
     }
     public void closeSettings(View view){
+        soundPlayer.playClickSound();
         settingsView.setVisibility(View.INVISIBLE);
         findViewById(R.id.settingsButton).setVisibility(View.VISIBLE);
         findViewById(R.id.playButton).setVisibility(View.VISIBLE);
@@ -48,14 +66,27 @@ public class MainActivity extends AppCompatActivity {
     private void setPlayer(int playerId){
         int tmpOldAvatar = playerAvatar;
         playerAvatar = playerId;
-        setTint(tmpOldAvatar);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt("avatarId", playerAvatar);
+        editor.commit();
+        setGray(tmpOldAvatar);
+        if(soundPlayer != null)
+            soundPlayer.playClickSound();
     }
     public void mute(View view){
-        ImageButton muteBtn = findViewById(R.id.imageButtonMute);
         muted = !muted;
         muteBtn.setImageResource(muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putBoolean("muted", muted);
+        editor.commit();
+        soundPlayer.setMuted(muted);
+        /*if(!muted)
+            bgMusic.startMusic();
+        else
+            bgMusic.stopMusic();*/
+        soundPlayer.playClickSound();
     }
-    private void setTint(int oldAvatar){
+    private void setGray(int oldAvatar){
         ColorMatrix matrix = new ColorMatrix();
         matrix.setSaturation(0);
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
@@ -68,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
         btn = findViewById(resID);
         btn.clearColorFilter();
     }
-    private void setGray(){
+
+    private void setGrayAll(){
         ColorMatrix matrix = new ColorMatrix();
         matrix.setSaturation(0);
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
@@ -83,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
             hideSystemUI();
+        }
+        else{
+
         }
     }
     private void hideSystemUI() {

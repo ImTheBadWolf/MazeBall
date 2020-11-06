@@ -3,7 +3,9 @@ package com.example.mazeball;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,16 +30,17 @@ public class GameActivity extends AppCompatActivity implements EventListener {
     game_view gameView;
     pause_view pauseView;
     Win_view winView;
-    int playerAvatar;
     ImageButton muteButton;
+    ArrayList<ArrayList<String>> mazeMapsS = new ArrayList();
+    ArrayList<ArrayList<Integer[]>> mazeMapsI = new ArrayList();
+    SoundPlayer soundPlayer;
+    SharedPreferences sharedpreferences;
     int mapIndex = 0;
     float accX;
     float accY;
 
-    ArrayList<ArrayList<String>> mazeMapsS = new ArrayList();
-    ArrayList<ArrayList<Integer[]>> mazeMapsI = new ArrayList();
-
-    boolean muted; //TODO pass this variable from main menu where its loaded from global settings file
+    boolean muted;
+    int playerAvatar;
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -61,10 +64,13 @@ public class GameActivity extends AppCompatActivity implements EventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        sharedpreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        playerAvatar = sharedpreferences.getInt("avatarId", 1);
+        muted = sharedpreferences.getBoolean("muted", false);
+        soundPlayer = new SoundPlayer(this, muted);
 
         Intent i = getIntent();
         mapIndex  = i.getIntExtra("level", 1) - 1;
-        playerAvatar  = i.getIntExtra("avatar", 1)-1;
         loadLevels();
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -73,18 +79,21 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         pauseView = findViewById(R.id.pauseView);
         winView = findViewById(R.id.winview);
         muteButton = findViewById(R.id.imageButton4);
-
+        muteButton.setImageResource( muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground );
         gameView.setAvatar(playerAvatar);
         gameView.setMazeMap(cloneArray(mapIndex));
         Toast.makeText(this, "Level " + (mapIndex+1), Toast.LENGTH_SHORT).show();
         gameView.attachActivity(this);
     }
 
+
     public void onResume() {
         super.onResume();
         sensorManager.registerListener(accEListener, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        muted = sharedpreferences.getBoolean("muted", false);
+        soundPlayer.setMuted(muted);
+        muteButton.setImageResource( muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground );
     }
-
     public void onStop() {
         super.onStop();
         sensorManager.unregisterListener(accEListener);
@@ -100,31 +109,40 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         }
     };
 
-
     public void pauseGame(View view) {
+        soundPlayer.playClickSound();
         pauseView.setVisibility(View.VISIBLE);
         findViewById(R.id.imageButton).setVisibility(View.INVISIBLE);
         gameView.setPaused(true);
     }
     public void resumeGame(View view) {
+        soundPlayer.playClickSound();
         pauseView.setVisibility(View.INVISIBLE);
         findViewById(R.id.imageButton).setVisibility(View.VISIBLE);
         gameView.setPaused(false);
     }
     public void calibrateAccelerometer(View view){
+        soundPlayer.playClickSound();
         gameView.calibrateAccelerometer(accX, accY);
         pauseView.setVisibility(View.INVISIBLE);
         findViewById(R.id.imageButton).setVisibility(View.VISIBLE);
         gameView.setPaused(false);
     }
     public void quitGame(View view){
+        soundPlayer.playClickSound();
         NavUtils.navigateUpFromSameTask(this);
     }
     public void muteGame(View view){
-        muteButton.setImageResource( muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground );
         muted = !muted;
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putBoolean("muted", muted);
+        editor.commit();
+        muteButton.setImageResource( muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground );
+        soundPlayer.setMuted(muted);
+        soundPlayer.playClickSound();
     }
     public void nextLevel(View view){
+        soundPlayer.playClickSound();
         this.nextLevel();
     }
     public void nextLevel(){
@@ -147,6 +165,13 @@ public class GameActivity extends AppCompatActivity implements EventListener {
     public void levelFinished() {
         winView.setVisibility(View.VISIBLE);
         findViewById(R.id.imageButton).setVisibility(View.INVISIBLE);
+        soundPlayer.playWinSound();
+        int tmpLevel = sharedpreferences.getInt("maxLevel", 1);
+        if(tmpLevel < 8 && !(mapIndex+1 < tmpLevel)){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt("maxLevel", tmpLevel+1);
+            editor.commit();
+        }
     }
     private void loadLevels(){
         AssetManager assetManager = getAssets();

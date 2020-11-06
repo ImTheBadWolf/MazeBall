@@ -166,7 +166,7 @@ public class game_view extends View{
                 canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(j * width/gameWidth, i * height/gameHeight, (j + 1) * width/gameWidth, (i + 1) * height/gameHeight), null);
             }
         }
-        canvas.drawBitmap(player[avatarId], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
+        canvas.drawBitmap(player[avatarId-1], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
 
         if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
             playerPos[0] =-1;//TODO remove this shitcode
