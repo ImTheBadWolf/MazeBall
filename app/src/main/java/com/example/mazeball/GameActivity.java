@@ -136,7 +136,7 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         muted = !muted;
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putBoolean("muted", muted);
-        editor.commit();
+        editor.commit();//TODO change commit to apply
         muteButton.setImageResource( muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground );
         soundPlayer.setMuted(muted);
         soundPlayer.playClickSound();

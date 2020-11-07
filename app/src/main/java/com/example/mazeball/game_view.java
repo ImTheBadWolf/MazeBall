@@ -34,7 +34,7 @@ public class game_view extends View{
     boolean end = false;
     boolean paused = false;
     Integer[][] mazeMap = {
-            {0}
+            {0},
     };
 
     int gameWidth = mazeMap[0].length;
@@ -161,12 +161,44 @@ public class game_view extends View{
     }
     @Override
     protected void onDraw(Canvas canvas) {
-        for (int i = 0; i < gameHeight; i++) {
-            for (int j = 0; j < gameWidth; j++) {
-                canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(j * width/gameWidth, i * height/gameHeight, (j + 1) * width/gameWidth, (i + 1) * height/gameHeight), null);
-            }
+        //render only 11x7 part of maze, TODO this will cause problems with maps smaller than 11x7
+        int renderFromX = playerPos[0]-5;
+        int renderToX = playerPos[0]+6;
+        int renderFromY = playerPos[1]-3;
+        int renderToY = playerPos[1]+4;
+        int playerX = 5;
+        int playerY = 3;
+        if(renderFromX < 0){
+            renderToX += -1*renderFromX;
+            playerX += renderFromX;
+            renderFromX = 0;
         }
-        canvas.drawBitmap(player[avatarId-1], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
+        if(renderToX > gameWidth-1){
+            renderFromX -= renderToX-gameWidth;
+            playerX += renderToX-gameWidth;
+            renderToX = gameWidth;
+        }
+
+        if(renderFromY < 0){
+            renderToY += -1*renderFromY;
+            playerY += renderFromY;
+            renderFromY = 0;
+        }
+        if(renderToY > gameHeight-1){
+            renderFromY -= renderToY-gameHeight;
+            playerY += renderToY-gameHeight;
+            renderToY = gameHeight;
+        }
+        int y = 0;
+        for (int i = renderFromY; i < renderToY; i++) {
+            int x = 0;
+            for (int j = renderFromX; j < renderToX; j++) {
+                canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(x * width/11, y * height/7, (x + 1) * width/11, (y + 1) * height/7), null);
+                x++;
+            }
+            y++;
+        }
+        canvas.drawBitmap(player[avatarId-1], null, new Rect(playerX * width/11, playerY * height/7, (playerX + 1) * width/11, (playerY + 1) * height/7), null);
 
         if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
             playerPos[0] =-1;
