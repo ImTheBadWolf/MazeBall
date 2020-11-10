@@ -5,17 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewParent;
 import android.widget.Toast;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 enum moveDir{
     UP,
@@ -31,23 +25,27 @@ public class game_view extends View{
     int avatarId = 1;
     float accXOffset = -999999999;
     float accYOffset = -999999999;
+    int XI = 0;
+    int YI = 1;
     boolean end = false;
     boolean paused = false;
     Integer[][] mazeMap = {
-            {0}
+            {0},
+
     };
 
     int gameWidth = mazeMap[0].length;
     int gameHeight = mazeMap.length;
 
-    int[] playerPos = new int[2];
+    float[] playerPos = new float[2];
+    float[] playerVGoal = new float[2];
+
     int[] goalPos = new int[]{-1,-1};
 
     private EventListener listener;
 
     public void setRotationValues(float x, float y){
         if(accXOffset == -999999999 && accYOffset == -999999999){
-            //setOffset for accelerometer
             accXOffset = x;
             accYOffset = y;
         }
@@ -59,31 +57,45 @@ public class game_view extends View{
 
     public void movePlayer(float x, float y){
         if(y > 5 && canMove(moveDir.RIGHT)){
-            playerPos[0] += 1;
+            playerVGoal[XI] = playerPos[XI] + 1;
         }
         else if(y < -5 && canMove(moveDir.LEFT)){
-            playerPos[0] -= 1;
+            playerVGoal[XI] = playerPos[XI] - 1;
         }
+        else
+            playerVGoal[XI] = playerPos[XI];
         if(x > 5 && canMove(moveDir.DOWN)){
-            playerPos[1] += 1;
+            playerVGoal[YI] = playerPos[YI] + 1;
         }
         else if(x < -5 && canMove(moveDir.UP)){
-            playerPos[1] -= 1;
+            playerVGoal[YI] = playerPos[YI] - 1;
         }
+        else
+            playerVGoal[YI] = playerPos[YI];
+
         invalidate();
     }
     private boolean canMove(moveDir dir){
-        switch (dir){
+        int playerX = (int)Math.round(playerPos[XI]);
+        int playerY = (int)Math.round(playerPos[YI]);
+        Log.d("playerPos", "X:"+playerPos[XI] + " Y:"+playerPos[YI] +" playerPosINTRound: " + playerX + ":" + playerY);
+        Log.d("playerPosMazeUP", ""+mazeMap[playerY-1][playerX]);
+        Log.d("playerPosMazeDOWN", ""+mazeMap[playerY+1][playerX]);
+        Log.d("playerPosMazeLEFT", ""+mazeMap[playerY][playerX-1]);
+        Log.d("playerPosMazeRIGHT", ""+mazeMap[playerY][playerX+1]);
+        Log.d("playerPosEnd", "-----------------------");
+
+        /*switch (dir){
             case RIGHT:
-                return (mazeMap[playerPos[1]][playerPos[0]+1] == 0 );
+                return (mazeMap[(int)Math.round(playerPos[1])][(int)playerPos[0]+1] == 0 );
             case LEFT:
-                return (mazeMap[playerPos[1]][playerPos[0]-1] == 0 );
+                return (mazeMap[(int)Math.round(playerPos[1])][(int)playerPos[0]-1] == 0 );
             case UP:
-                return (mazeMap[playerPos[1]-1][playerPos[0]] == 0 );
+                return (mazeMap[(int)playerPos[1]-1][(int)playerPos[0]] == 0 );
             case DOWN:
-                return (mazeMap[playerPos[1]+1][playerPos[0]] == 0 );
-        }
-        return false;
+                return (mazeMap[(int)playerPos[1]+1][(int)playerPos[0]] == 0 );
+        }*/
+        return true;
     }
 
     public game_view(Context context) {
@@ -119,8 +131,9 @@ public class game_view extends View{
         for(int y = 0; y < mazeMap.length; y++){
             for(int x = 0; x < mazeMap[0].length; x++){
                 if(mazeMap[y][x] == 3){
-                    playerPos[0] = x;
-                    playerPos[1] = y;
+                    playerPos[XI] = x;
+                    playerPos[YI] = y;
+                    playerVGoal = playerPos.clone();
                     mazeMap[y][x] = 0;
                 }
                 else if(mazeMap[y][x] == 4){
@@ -163,17 +176,43 @@ public class game_view extends View{
     protected void onDraw(Canvas canvas) {
         for (int i = 0; i < gameHeight; i++) {
             for (int j = 0; j < gameWidth; j++) {
-                canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(j * width/gameWidth, i * height/gameHeight, (j + 1) * width/gameWidth, (i + 1) * height/gameHeight), null);
+                canvas.drawBitmap(bmp[mazeMap[i][j]], null, new Rect(
+                        j * width/gameWidth,
+                        i * height/gameHeight,
+                        (j + 1) * width/gameWidth,
+                        (i + 1) * height/gameHeight), null);
             }
         }
-        canvas.drawBitmap(player[avatarId-1], null, new Rect(playerPos[0] * width/gameWidth, playerPos[1] * height/gameHeight, (playerPos[0] + 1) * width/gameWidth, (playerPos[1] + 1) * height/gameHeight), null);
 
-        if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
+        playerPos[XI] = Lerp(playerVGoal[XI], playerPos[XI], 0.15f);
+        playerPos[YI] = Lerp(playerVGoal[YI], playerPos[YI], 0.15f);
+
+
+        int sizeX = width/gameWidth;
+        int sizeY = height/gameHeight;
+
+        canvas.drawBitmap(player[avatarId-1], null, new Rect(
+                (int)(playerPos[XI] * sizeX),
+                (int)(playerPos[YI] * sizeY),
+                (int)((playerPos[XI] * sizeX) + sizeX),
+                (int)((playerPos[YI] * sizeY) + sizeY)),
+                null);
+
+        /*if(playerPos[0] == goalPos[0] && playerPos[1] == goalPos[1]){
             playerPos[0] =-1;
             playerPos[1] = -1;
             end = true;
             listener.levelFinished();
-        }
+        } TODO wont work with floats for now*/
+    }
+    private float Lerp(float goal, float current, float dt){
+        float diff = goal-current;
+
+        if(diff > dt)
+            return current + dt;
+        if(diff < -dt)
+            return current - dt;
+        return goal;
     }
     public void attachActivity(Activity activity) {
         if(activity instanceof EventListener) {

@@ -89,7 +89,7 @@ public class GameActivity extends AppCompatActivity implements EventListener {
 
     public void onResume() {
         super.onResume();
-        sensorManager.registerListener(accEListener, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(accEListener, accSensor, SensorManager.SENSOR_DELAY_GAME);
         muted = sharedpreferences.getBoolean("muted", false);
         soundPlayer.setMuted(muted);
         muteButton.setImageResource( muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground );
