@@ -18,6 +18,72 @@
         app:srcCompat="@mipmap/menubg_foreground"
         tools:layout_editor_absoluteX="65dp" />
 
+    <ImageView
+        android:id="@+id/playerSprite"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="24dp"
+        android:rotation="45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/player1_foreground" />
+
+    <ImageView
+        android:id="@+id/playerSprite1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="150dp"
+        android:rotation="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/player4_foreground" />
+
+    <ImageView
+        android:id="@+id/playerSprite2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="500dp"
+        android:layout_marginTop="120dp"
+        android:rotation="-45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/player2_foreground" />
+
+    <ImageView
+        android:id="@+id/playerSprite3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="20dp"
+        android:rotation="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/player6_foreground" />
+
+    <ImageView
+        android:id="@+id/playerSprite4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="580dp"
+        android:layout_marginBottom="45dp"
+        android:rotation="-25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/player5_foreground" />
+
+    <ImageView
+        android:id="@+id/playerSprite5"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="600dp"
+        android:layout_marginTop="10dp"
+        android:rotation="160"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/player3_foreground" />
+
     <ImageButton
         android:id="@+id/playButton"
         android:layout_width="139dp"

@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     ImageButton muteBtn;
     int playerAvatar;
+    int sWidth, sHeight;
     boolean muted;
 
     @Override
@@ -33,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setGrayAll();
         setPlayer(playerAvatar);
         soundPlayer = new SoundPlayer(this, muted);
-
+        sWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        sHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
     }
     @Override
     protected void onResume() {
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         soundPlayer.setMuted(muted);
         muteBtn.setImageResource(muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground);
     }
+
 
     public void launchGame(View view){
         soundPlayer.playClickSound();
