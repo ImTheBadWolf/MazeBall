@@ -114,6 +114,19 @@
         app:srcCompat="@mipmap/settingsbutton_foreground"
         android:onClick="openSettings"/>
 
+    <ImageButton
+        android:id="@+id/scoreButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="100dp"
+        android:background="#00FFFFFF"
+        android:onClick="openScore"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@mipmap/scorebtn_foreground" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -130,17 +143,59 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text=" Maze Runner " />
 
+    <com.example.mazeball.Score_view
+        android:id="@+id/scoreView"
+        android:layout_width="650dp"
+        android:layout_height="350dp"
+        android:background="@mipmap/pausebg_foreground"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/scoretext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="80dp"
+            android:textColor="#1CC124"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="TESTESTEa" />
+
+        <ImageButton
+            android:id="@+id/imageButtonScore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            android:background="#00FFFFFF"
+            android:onClick="closeScore"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/closebutton_foreground" />
+
+    </com.example.mazeball.Score_view>
+
     <com.example.mazeball.Settings_view
         android:id="@+id/settingsView"
         android:layout_width="650dp"
         android:layout_height="350dp"
         android:background="@mipmap/pausebg_foreground"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:visibility="invisible">
+        app:layout_constraintTop_toBottomOf="parent">
 
         <ImageButton
             android:id="@+id/imageButtonMute"
@@ -154,6 +209,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/muteoff_foreground" />
+
         <ImageButton
             android:id="@+id/imageButtonSettings"
             android:layout_width="40dp"
@@ -227,6 +283,7 @@
                     android:tag="4"
                     app:srcCompat="@mipmap/player4_foreground" />
             </TableRow>
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

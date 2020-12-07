@@ -14,10 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     Settings_view settingsView;
+    Score_view scoreView;
     SoundPlayer soundPlayer;
     SharedPreferences sharedpreferences;
     ImageButton muteBtn;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         playerAvatar = sharedpreferences.getInt("avatarId", 1);
         muted = sharedpreferences.getBoolean("muted", false);
         settingsView = findViewById(R.id.settingsView);
+        scoreView = findViewById(R.id.scoreView);
         muteBtn = findViewById(R.id.imageButtonMute);
         muteBtn.setImageResource(muted ? R.mipmap.mute_foreground : R.mipmap.muteoff_foreground);
         setGrayAll();
@@ -60,12 +63,36 @@ public class MainActivity extends AppCompatActivity {
         settingsView.setVisibility(View.VISIBLE);
         findViewById(R.id.settingsButton).setVisibility(View.INVISIBLE);
         findViewById(R.id.playButton).setVisibility(View.INVISIBLE);
+        findViewById(R.id.scoreButton).setVisibility(View.INVISIBLE);
+
     }
     public void closeSettings(View view){
         soundPlayer.playClickSound();
         settingsView.setVisibility(View.INVISIBLE);
         findViewById(R.id.settingsButton).setVisibility(View.VISIBLE);
         findViewById(R.id.playButton).setVisibility(View.VISIBLE);
+        findViewById(R.id.scoreButton).setVisibility(View.VISIBLE);
+    }
+    public void openScore(View view){
+        //TODO open score view
+        scoreView.setVisibility(View.VISIBLE);
+        soundPlayer.playClickSound();
+        findViewById(R.id.settingsButton).setVisibility(View.INVISIBLE);
+        findViewById(R.id.playButton).setVisibility(View.INVISIBLE);
+        findViewById(R.id.scoreButton).setVisibility(View.INVISIBLE);
+
+        /*TextView txtView = findViewById(R.id.scoretext);
+        long levelTime = sharedpreferences.getLong("levelTime0", 420);
+        txtView.setText(levelTime+"");*/
+
+    }
+    public void closeScore(View view){
+        //TODO close score view
+        scoreView.setVisibility(View.INVISIBLE);
+        soundPlayer.playClickSound();
+        findViewById(R.id.settingsButton).setVisibility(View.VISIBLE);
+        findViewById(R.id.playButton).setVisibility(View.VISIBLE);
+        findViewById(R.id.scoreButton).setVisibility(View.VISIBLE);
     }
     public void setPlayer(View view){
         this.setPlayer(Integer.parseInt(view.getTag().toString()));

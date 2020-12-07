@@ -12,7 +12,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -38,6 +37,8 @@ public class GameActivity extends AppCompatActivity implements EventListener {
     int mapIndex = 0;
     float accX;
     float accY;
+    long levelTime;
+    long pauseTime;
 
     boolean muted;
     int playerAvatar;
@@ -84,6 +85,7 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         gameView.setMazeMap(cloneArray(mapIndex));
         Toast.makeText(this, "Level " + (mapIndex+1), Toast.LENGTH_SHORT).show();
         gameView.attachActivity(this);
+        levelTime = System.currentTimeMillis();
     }
 
 
@@ -114,12 +116,14 @@ public class GameActivity extends AppCompatActivity implements EventListener {
         pauseView.setVisibility(View.VISIBLE);
         findViewById(R.id.imageButton).setVisibility(View.INVISIBLE);
         gameView.setPaused(true);
+        pauseTime = System.currentTimeMillis();
     }
     public void resumeGame(View view) {
         soundPlayer.playClickSound();
         pauseView.setVisibility(View.INVISIBLE);
         findViewById(R.id.imageButton).setVisibility(View.VISIBLE);
         gameView.setPaused(false);
+        pauseTime = System.currentTimeMillis() - pauseTime;
     }
     public void calibrateAccelerometer(View view){
         soundPlayer.playClickSound();
@@ -151,6 +155,7 @@ public class GameActivity extends AppCompatActivity implements EventListener {
             mapIndex = 0;
         gameView.setMazeMap(cloneArray(mapIndex));
         Toast.makeText(this, "Level " + (mapIndex+1), Toast.LENGTH_SHORT).show();
+        levelTime = System.currentTimeMillis();
         winView.setVisibility(View.INVISIBLE);
         findViewById(R.id.imageButton).setVisibility(View.VISIBLE);
     }
@@ -164,14 +169,23 @@ public class GameActivity extends AppCompatActivity implements EventListener {
     @Override
     public void levelFinished() {
         winView.setVisibility(View.VISIBLE);
+        levelTime = (System.currentTimeMillis() - levelTime) - pauseTime;
+        levelTime /= 1000;
         findViewById(R.id.imageButton).setVisibility(View.INVISIBLE);
         soundPlayer.playWinSound();
         int tmpLevel = sharedpreferences.getInt("maxLevel", 1);
+        if(sharedpreferences.getLong("levelTime" + mapIndex, Long.MAX_VALUE) > levelTime){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putLong("levelTime" + mapIndex, levelTime);
+            editor.commit();
+        }
         if(tmpLevel < 8 && !(mapIndex+1 < tmpLevel)){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putInt("maxLevel", tmpLevel+1);
             editor.commit();
         }
+        pauseTime = 0;
+        levelTime = 0;
     }
     private void loadLevels(){
         AssetManager assetManager = getAssets();
